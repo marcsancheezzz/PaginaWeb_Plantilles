@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Control</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system;background:#f5f5f7}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:white;
+    border-bottom:1px solid #ddd;
+}
+.logo{font-weight:bold}
+.cart-btn{cursor:pointer;font-weight:bold}
+
+/* HERO */
+.hero{
+    display:flex;
+    flex-wrap:wrap;
+    padding:60px;
+}
+.hero img{width:100%;border-radius:20px}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    transition:.3s;
+}
+.card:hover{transform:scale(1.05)}
+
+.btn{
+    background:#22c55e;
+    padding:12px;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+/* CART */
+.cart{
+    position:fixed;
+    right:-400px;
+    top:0;
+    width:300px;
+    height:100%;
+    background:white;
+    box-shadow:-5px 0 20px rgba(0,0,0,0.1);
+    padding:20px;
+    transition:.3s;
+}
+.cart.open{right:0}
+
+/* REVIEWS */
+.review{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+.review img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+}
+
+/* SECTION */
+.section{
+    padding:60px 40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">DAILY CONTROL</div>
+<div class="cart-btn" onclick="toggleCart()">🛒 Carrito (<span id="cart-count">0</span>)</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+<div style="flex:1;min-width:300px">
+<img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d">
+</div>
+
+<div style="flex:1;min-width:300px;padding:20px">
+<h1>El Rastreador de Hábitos Definitivo</h1>
+<h2>€9.95</h2>
+
+<div class="btn" onclick="addToCart('Rastreador de Hábitos',9.95)">
+Comprar ahora
+</div>
+</div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="section">
+<h2>Todos los productos</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Plantilla Finanzas</h3>
+<p>Controla tu dinero</p>
+<strong>€11.99</strong>
+<div class="btn" onclick="addToCart('Finanzas',11.99)">Añadir</div>
+</div>
+
+<div class="card">
+<h3>Planner Diario</h3>
+<p>Organiza tu día</p>
+<strong>€6.99</strong>
+<div class="btn" onclick="addToCart('Planner',6.99)">Añadir</div>
+</div>
+
+<div class="card">
+<h3>Tracker Fitness</h3>
+<p>Progreso físico</p>
+<strong>€8.99</strong>
+<div class="btn" onclick="addToCart('Fitness',8.99)">Añadir</div>
+</div>
+
+<div class="card">
+<h3>Control de Tiempo</h3>
+<p>Gestiona horas</p>
+<strong>€5.99</strong>
+<div class="btn" onclick="addToCart('Tiempo',5.99)">Añadir</div>
+</div>
+
+</div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section">
+<h2>Opiniones reales</h2>
+
+<div class="review">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<div>
+<strong>Juan</strong>
+<p>Me ha cambiado la vida 🔥</p>
+</div>
+</div>
+
+<div class="review">
+<img src="https://randomuser.me/api/portraits/women/44.jpg">
+<div>
+<strong>Laura</strong>
+<p>Muy fácil de usar</p>
+</div>
+</div>
+
+</section>
+
+<!-- CART -->
+<div class="cart" id="cart">
+<h2>Carrito</h2>
+<ul id="cart-items"></ul>
+<h3>Total: €<span id="total">0</span></h3>
+</div>
+
+<script>
+let cart = [];
+
+function toggleCart(){
+    document.getElementById("cart").classList.toggle("open");
+}
+
+function addToCart(name, price){
+    cart.push({name, price});
+    renderCart();
+}
+
+function renderCart(){
+    let list = document.getElementById("cart-items");
+    list.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach(item=>{
+        let li = document.createElement("li");
+        li.textContent = item.name + " - €" + item.price;
+        list.appendChild(li);
+        total += item.price;
+    });
+
+    document.getElementById("total").innerText = total.toFixed(2);
+    document.getElementById("cart-count").innerText = cart.length;
+}
+</script>
+
+</body>
+</html>
